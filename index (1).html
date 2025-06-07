@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AngloSeek – English Resource Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 40px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px auto 30px;
+    }
+    .filters h3 {
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    .filter-button {
+      background: #fff;
+      border: 2px solid #007BFF;
+      color: #007BFF;
+      padding: 6px 12px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .filter-button.active {
+      background: #007BFF;
+      color: #fff;
+    }
+    .gcse-search {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    .clear-button {
+      margin-top: 10px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>AngloSeek</h1>
+  <p>Smart search for English worksheets, presentations, audio, video & more</p>
+
+  <div class="filters">
+    <h3>Level</h3>
+    <div class="filter-button" data-keyword="A1">A1</div>
+    <div class="filter-button" data-keyword="A2">A2</div>
+    <div class="filter-button" data-keyword="B1">B1</div>
+    <div class="filter-button" data-keyword="B2">B2</div>
+    <div class="filter-button" data-keyword="C1">C1</div>
+    <div class="filter-button" data-keyword="C2">C2</div>
+
+    <h3>Age</h3>
+    <div class="filter-button" data-keyword="kids">Kids</div>
+    <div class="filter-button" data-keyword="teens">Teens</div>
+    <div class="filter-button" data-keyword="adults">Adults</div>
+
+    <h3>Type</h3>
+    <div class="filter-button" data-keyword="worksheet">Worksheet</div>
+    <div class="filter-button" data-keyword="presentation">Presentation</div>
+    <div class="filter-button" data-keyword="audio">Audio</div>
+    <div class="filter-button" data-keyword="video">Video</div>
+    <div class="filter-button" data-keyword="interactive exercise">Interactive</div>
+    <div class="filter-button" data-keyword="quiz">Quiz</div>
+  </div>
+
+  <button class="clear-button" onclick="clearFilters()">Clear All</button>
+
+  <div class="gcse-search"></div>
+
+  <script async src="https://cse.google.com/cse.js?cx=70253610b8dff4691"></script>
+  <script>
+    const activeFilters = new Set();
+
+    function updateSearchBox() {
+      const searchBox = document.querySelector('input.gsc-input');
+      if (searchBox) {
+        searchBox.value = Array.from(activeFilters).join(" ");
+        searchBox.focus();
+      }
+    }
+
+    function clearFilters() {
+      activeFilters.clear();
+      document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+      updateSearchBox();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.filter-button').forEach(button => {
+        button.addEventListener('click', () => {
+          const keyword = button.getAttribute('data-keyword');
+          if (activeFilters.has(keyword)) {
+            activeFilters.delete(keyword);
+            button.classList.remove('active');
+          } else {
+            activeFilters.add(keyword);
+            button.classList.add('active');
+          }
+          updateSearchBox();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
