@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AngloSeek</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      background-color: #ffffff;
+      color: #222;
+    }
+    .container {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    p.description {
+      font-size: 18px;
+      color: #555;
+    }
+    .search-container {
+      margin-top: 30px;
+    }
+    input[type="text"] {
+      width: 70%;
+      padding: 12px 20px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #000;
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .filters label {
+      background: #f0f0f0;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .filters input[type="checkbox"] {
+      display: none;
+    }
+    .filters input[type="checkbox"]:checked + span {
+      background-color: #000;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📘 AngloSeek</h1>
+    <p class="description">Smart search for English learning resources.</p>
+
+    <div class="filters">
+      <label><input type="checkbox" value="A1"><span>A1</span></label>
+      <label><input type="checkbox" value="A2"><span>A2</span></label>
+      <label><input type="checkbox" value="B1"><span>B1</span></label>
+      <label><input type="checkbox" value="B2"><span>B2</span></label>
+      <label><input type="checkbox" value="C1"><span>C1</span></label>
+      <label><input type="checkbox" value="C2"><span>C2</span></label>
+      <label><input type="checkbox" value="Kids"><span>Kids</span></label>
+      <label><input type="checkbox" value="Teens"><span>Teens</span></label>
+      <label><input type="checkbox" value="Adults"><span>Adults</span></label>
+      <label><input type="checkbox" value="Worksheet"><span>Worksheet</span></label>
+      <label><input type="checkbox" value="Quiz"><span>Quiz</span></label>
+      <label><input type="checkbox" value="Presentation"><span>Presentation</span></label>
+      <label><input type="checkbox" value="Audio"><span>Audio</span></label>
+      <label><input type="checkbox" value="Video"><span>Video</span></label>
+      <label><input type="checkbox" value="Interactive"><span>Interactive</span></label>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="searchBox" placeholder="Search for English worksheets..." />
+      <button onclick="performSearch()">🔍</button>
+    </div>
+  </div>
+
+  <script>
+    function performSearch() {
+      const searchBox = document.getElementById('searchBox');
+      const searchQuery = searchBox.value;
+
+      const selectedFilters = Array.from(document.querySelectorAll('.filters input[type="checkbox"]:checked'))
+                                   .map(cb => cb.value)
+                                   .join(" ");
+
+      const fullQuery = [searchQuery, selectedFilters].filter(Boolean).join(" ");
+      const url = "https://www.google.com/search?q=" + encodeURIComponent(fullQuery);
+      window.open(url, '_blank');
+    }
+
+    document.getElementById("searchBox").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        performSearch();
+      }
+    });
+  </script>
+</body>
+</html>
